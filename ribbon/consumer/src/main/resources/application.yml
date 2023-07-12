@@ -1,0 +1,27 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: consumer
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.168.168:8761/eureka
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port}
+#修改默认的负载均衡算法 指定某一个服务使用什么算法
+#provider: #提供者的服务名称，那么访问该服务的时候就会按照自定义的负载均衡算法
+#  ribbon:
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #修改默认负载均衡算法，几种算法的全限定类名
+ribbon: #全局的设置
+  eager-load:
+    enabled: false #ribbon一启动不会主动去eureka拉取服务列表，当实际使用时才去拉取，是否立即加载
+  http:
+    client:
+      enabled: false #在 ribbon 最后要发起http的调用时，我们认为是RestTemplate完成的，其实最后是HttpURLConnection来完成的，这里面设置为true，可以把HttpUrlConnection->HttpClient 很方便，但不支持连接池
+  okhttp:
+    enabled: false #HttpUrlConnection 来完成的，这里面设置为 true ，可以把 HttpUrlConnection->OkHttpClient(也是发 http 请求的，它在移动端的开发用的多)
+  eureka:
+    enabled: true #开启eureka支持

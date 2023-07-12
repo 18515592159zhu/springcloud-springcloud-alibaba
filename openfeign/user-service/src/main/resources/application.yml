@@ -1,0 +1,22 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: user-service
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.168.168:8761/eureka
+  instance:
+    hostname: localhost
+    instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port}
+    prefer-ip-address: true
+#feign只是帮你封装了远程调用的功能  底层还是ribbon 所以我们需要去修改ribbon的时间
+ribbon:
+  ReadTimeout: 6000 #给3s超时时间
+  ConnectTimeout: 6000 #链接服务的超时时间
+
+logging:
+  level:
+    com.zcf.feign.UserOrderFeign: debug #我需要打开这个接口下面的日志
+

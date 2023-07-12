@@ -1,0 +1,19 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: config-client-a
+  cloud: #项目在启动的时候去哪里找它对应的配置文件呢??
+    nacos: #指定配置中心的地址和配置中心使用的数据格式:
+      config:
+        server-addr: localhost:8848
+        namespace: 59edc926-ef3d-42a1-9863-c109757eabd4 #命名空间 注意使用 id 目前读取多配置文件的方式只支持在同一个命名空间下
+        group: GROUP_A #组别
+        prefix: config-client
+        file-extension: yml #后缀 文件格式
+        username: nacos
+        password: nacos
+#          file-extension: yaml #文件类型
+  profiles:
+    active: dev
+

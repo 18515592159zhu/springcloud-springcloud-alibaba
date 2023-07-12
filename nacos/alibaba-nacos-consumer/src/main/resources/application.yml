@@ -1,0 +1,18 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: alibaba-nacos-consumer
+  cloud:
+    nacos: #客户端注册的地址
+      server-addr: localhost:8848
+      username: nacos
+      password: nacos
+#      discovery: #命名空间 可以做项目隔离
+#        namespace: car-namespace
+#        group: dev #在命名空间下的组别，可以用来做细粒度的隔离
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

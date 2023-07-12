@@ -1,0 +1,18 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: config-client-b
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace: 59edc926-ef3d-42a1-9863-c109757eabd4 #命名空间 注意使用 id
+        extension-configs: #配置多个配置文件 数组形式
+          - data-id: config-a.yml #配置 id，必须要加文件后缀
+            group: GROUP_A #组别
+            refresh: true #是否支持刷新
+          - data-id: config-b.yml
+            group: GROUP_B
+            refresh: false
+

@@ -1,0 +1,20 @@
+server:
+  port: 8080 #客户端的端口没有要求
+spring:
+  application:
+    name: eureka-client-a
+# 注册的含义是什么? 就是将自己的一些信息(什么信息ip port...) 发送过去 (发到哪里)
+eureka:
+  client:
+    service-url: #指定注册的地址 eureka 服务端和客户端的交互地址 集群用,隔开
+      defaultZone: http://localhost:8761/eureka
+      #defaultZone: http://peer1:8761/eureka,http://peer2:8762/eureka,http://peer3:8763/eureka
+    register-with-eureka: true #注册自己 可以不往eureka-server注册
+    fetch-registry: true #应用是否去拉去服务列表到本地
+    registry-fetch-interval-seconds: 10 #表示 eureka-client 间隔多久去拉取服务注册信息，为了缓解服务列表的脏读问题 时间越短脏读越少  性能消耗大
+  instance:
+    hostname: localhost #应用的主机名称 最好写主机ip
+    instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port} #实例 id
+    prefer-ip-address: true #服务列表以 ip 的形式展示
+    lease-renewal-interval-in-seconds: 10 #表示 eureka client 发送心跳给 server 端的频率
+    lease-expiration-duration-in-seconds: 20 #表示 eureka server 至上一次收到 client 的心跳之后，等待下一次心跳的超时时间，在这个时间内若没收到下一次心跳，则将移除该实例

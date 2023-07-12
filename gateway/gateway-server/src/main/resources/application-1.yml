@@ -1,0 +1,28 @@
+server:
+  port: 80
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]': #针对哪些路径
+            allowCredentials: true #这个是可以携带 cookie
+            allowedHeaders: '*'
+            allowedMethods: '*'
+            allowedOrigins: '*'
+  redis: #redis 的配置
+    host: 192.168.226.128
+    port: 6379
+    database: 0
+#eureka 的配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.168.168:8761/eureka
+  instance:
+    hostname: localhost
+    instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port}
+    prefer-ip-address: true
+
